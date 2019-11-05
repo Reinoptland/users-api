@@ -74,6 +74,6 @@ app.put('/users/:userId', (req, res) => {
 // X sync with database
 // X GET
 // X DELETE
-// - configure body parser
-// - POST
-// - PUT
+// X configure body parser
+// X POST
+// X PUT
