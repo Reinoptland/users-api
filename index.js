@@ -1,5 +1,18 @@
 // import library
 const express = require('express')
+const Sequelize = require('sequelize')
+const sequelize = new Sequelize('postgres://postgres:secret@localhost:5432/postgres')
+
+const User = sequelize.define('user', { email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
+}})
+
+sequelize.sync()
+    .then(() => User.truncate())
+    .then(() => User.create({ email: 'rein@rein.com' }))
+    .then(() => console.log('db synced'))
 
 // app will be our server object
 const app = express()
@@ -13,8 +26,8 @@ app.get('/', (req, res) => res.send('hello there stranger'))
 // X install dependencies
 // X run docker with postgres
 // X create server
-// - Create models
-// - sync with database
+// X Create models
+// X sync with database
 // - configure body parser
 // - GET
 // - POST
