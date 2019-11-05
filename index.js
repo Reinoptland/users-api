@@ -21,6 +21,14 @@ const port = 4000
 app.listen(port, () => console.log("listening on port " + port))
 
 app.get('/', (req, res) => res.send('hello there stranger'))
+
+app.get('/users', (req, res) => {
+    User.findAll()
+        .then((users) => {
+            res.status(200).json(users)
+        })
+})
+
 // TODO:
 
 // X install dependencies
@@ -28,8 +36,8 @@ app.get('/', (req, res) => res.send('hello there stranger'))
 // X create server
 // X Create models
 // X sync with database
-// - configure body parser
 // - GET
+// - DELETE
+// - configure body parser
 // - POST
 // - PUT
-// - DELETE
