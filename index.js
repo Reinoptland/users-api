@@ -29,6 +29,18 @@ app.get('/users', (req, res) => {
         })
 })
 
+app.delete('/users/:userId', (req, res) => {
+    console.log('REQ PARAMS:', req.params)
+    User.destroy({ where: { id: req.params.userId }})
+        .then((numberOfRecordsDeleted) => {
+            if(numberOfRecordsDeleted === 0){
+                res.status(404).send({ message: 'User not found' })
+            } else {
+                res.status(204).send({ message: 'User deleted'})
+            }
+        })
+})
+
 // TODO:
 
 // X install dependencies
@@ -36,7 +48,7 @@ app.get('/users', (req, res) => {
 // X create server
 // X Create models
 // X sync with database
-// - GET
+// X GET
 // - DELETE
 // - configure body parser
 // - POST
