@@ -54,6 +54,16 @@ app.post('/users', (req, res) => {
         })
 })
 
+app.put('/users/:userId', (req, res) => {
+    User.findByPk(req.params.userId)
+        .then(user => {
+            return user.update(req.body)
+        })
+        .then(updatedUser => {
+            res.status(200).send(updatedUser)
+        })
+})
+
 
 // TODO:
 
