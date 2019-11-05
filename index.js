@@ -2,6 +2,8 @@
 const express = require('express')
 const Sequelize = require('sequelize')
 const sequelize = new Sequelize('postgres://postgres:secret@localhost:5432/postgres')
+const bodyParser = require('body-parser')
+const bodyParserMiddleWare = bodyParser.json()
 
 const User = sequelize.define('user', { email: {
     type: Sequelize.STRING,
@@ -19,6 +21,9 @@ const app = express()
 const port = 4000
 
 app.listen(port, () => console.log("listening on port " + port))
+
+// CONFIGURE body parser BEFORE ROUTES
+app.use(bodyParserMiddleWare)
 
 app.get('/', (req, res) => res.send('hello there stranger'))
 
@@ -41,6 +46,15 @@ app.delete('/users/:userId', (req, res) => {
         })
 })
 
+app.post('/users', (req, res) => {
+    console.log(req.body)
+    User.create(req.body)
+        .then(user => {
+            res.status(201).send(user)
+        })
+})
+
+
 // TODO:
 
 // X install dependencies
@@ -49,7 +63,7 @@ app.delete('/users/:userId', (req, res) => {
 // X Create models
 // X sync with database
 // X GET
-// - DELETE
+// X DELETE
 // - configure body parser
 // - POST
 // - PUT
